@@ -89,6 +89,12 @@ public class Get extends Query implements Row {
     this.row = row;
   }
 
+  public Get(String str_row){
+    byte[] row = Bytes.toBytes(str_row);
+    Mutation.checkRow(row);
+    this.row = row;
+  }
+
   /**
    * Copy-constructor
    *
@@ -490,6 +496,7 @@ public class Get extends Query implements Row {
   public Get setAttribute(String name, byte[] value) {
     return (Get) super.setAttribute(name, value);
   }
+
 
   @Override
   public Get setId(String id) {

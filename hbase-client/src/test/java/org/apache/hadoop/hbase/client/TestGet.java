@@ -30,6 +30,7 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
+
 import java.util.Set;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseClassTestRule;
@@ -91,9 +92,22 @@ public class TestGet {
     "bGFzc1BLAQIUABQACAgIAFKDlEOtLmcoOgEAAPIBAAAVAAAAAAAAAAAAAAAAAD0CAAB0ZXN0L01v" +
     "Y2tGaWx0ZXIuY2xhc3NQSwUGAAAAAAQABAABAQAAugMAAAAA";
 
+
+  @Test
+  public void testGetStringConstructor(){
+    Get get = new Get("row");
+    Assert.assertArrayEquals(Bytes.toBytes("row"), get.getRow());
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void testGetStringConstructorEmpty(){
+    Get get = new Get("");
+  }
+
+
   @Test
   public void testAttributesSerialization() throws IOException {
-    Get get = new Get(Bytes.toBytes("row"));
+    Get get = new Get("row");
     get.setAttribute("attribute1", Bytes.toBytes("value1"));
     get.setAttribute("attribute2", Bytes.toBytes("value2"));
     get.setAttribute("attribute3", Bytes.toBytes("value3"));
